@@ -3,72 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAWAB ZADA | MASTER HUB</title>
+    <title>NAWAB ZADA | MASTER HUB PRO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Amiri&display=swap');
         
         * { box-sizing: border-box; transition: 0.3s; }
         body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; margin: 0; padding: 10px; }
         
-        .container { max-width: 950px; margin: auto; background: #0a0a0a; border: 2px solid #ff0000; border-radius: 15px; padding: 20px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); }
+        .container { max-width: 950px; margin: auto; background: #0a0a0a; border: 2px solid #ff0000; border-radius: 15px; padding: 20px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); }
         
         h1 { color: #ff0000; text-shadow: 0 0 15px #ff0000; letter-spacing: 3px; font-size: 1.8rem; margin: 10px 0; }
         .tagline { font-size: 0.6rem; color: #888; margin-bottom: 20px; letter-spacing: 2px; }
 
-        /* Grid System for 2 Boxes */
-        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
-        .hub-box { background: #050505; border: 1px solid #222; border-radius: 12px; padding: 20px; border-top: 3px solid #ff0000; }
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px; }
+        .hub-box { background: #050505; border: 1px solid #222; border-radius: 12px; padding: 15px; border-top: 3px solid #ff0000; }
         
-        input { background: #111; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 5px; width: 70%; font-family: 'Orbitron'; font-size: 0.8rem; outline: none; }
+        input { background: #111; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 5px; width: 70%; font-family: 'Orbitron'; font-size: 0.8rem; outline: none; border-bottom: 2px solid #ff0000; }
         button { background: #ff0000; border: none; padding: 12px 15px; color: #000; font-weight: bold; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.7rem; }
         
-        .result-area { display: none; margin-top: 20px; text-align: center; }
+        .result-area { display: none; margin-top: 20px; text-align: center; animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         /* Weather Styling */
-        .temp-main { font-size: 2.5rem; color: #ff0000; font-weight: bold; margin: 5px 0; }
-        .moon-icon { font-size: 1.5rem; color: #f1c40f; margin-top: 10px; }
+        .temp-main { font-size: 3rem; color: #ff0000; font-weight: bold; margin: 5px 0; }
+        .status-badge { background: #111; padding: 5px 15px; border-radius: 20px; border: 1px solid #ff0000; font-size: 0.7rem; color: #00ff00; display: inline-block; margin-bottom: 10px; }
 
-        /* Prayer Table Styling */
+        /* Prayer Times */
         .prayer-list { list-style: none; padding: 0; margin-top: 15px; }
         .prayer-list li { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #111; font-size: 0.9rem; }
-        .prayer-list li span { color: #ff0000; font-weight: bold; }
+        .prayer-list li span { color: #ff0000; font-weight: bold; text-shadow: 0 0 5px #ff0000; }
 
-        /* Forecast Table */
-        .forecast-table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 0.65rem; }
-        .forecast-table th { background: #ff0000; color: #000; padding: 8px; }
-        .forecast-table td { padding: 8px; border-bottom: 1px solid #111; }
+        /* Advanced Forecast Table */
+        .table-scroll { overflow-x: auto; margin-top: 20px; }
+        .forecast-table { width: 100%; border-collapse: collapse; font-size: 0.6rem; min-width: 400px; }
+        .forecast-table th { background: #ff0000; color: #000; padding: 10px; text-transform: uppercase; }
+        .forecast-table td { padding: 10px; border-bottom: 1px solid #111; background: #080808; }
+        .rain-high { color: #00ffff; font-weight: bold; }
 
-        .footer { margin-top: 40px; color: #333; font-size: 0.6rem; letter-spacing: 2px; }
+        .footer { margin-top: 40px; color: #444; font-size: 0.6rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>NAWAB ZADA HACKER</h1>
-        <p class="tagline">WEATHER & PRAYER INTELLIGENCE SYSTEM</p>
+        <h1>NAWAB ZADA Hacker</h1>
+        <p class="tagline">ELITE WEATHER & PRAYER HUB V4.0</p>
 
         <div class="hub-grid">
             <div class="hub-box">
                 <h3 style="color: #ff0000; font-size: 0.9rem; margin-bottom: 15px;">WEATHER ANALYZER</h3>
                 <div style="display: flex; gap: 5px; justify-content: center;">
                     <input type="text" id="weatherCity" placeholder="City Name">
-                    <button onclick="getWeather()">GO</button>
+                    <button onclick="getWeather()">ANALYZE</button>
                 </div>
                 
                 <div id="weatherResult" class="result-area">
-                    <h4 id="wName" style="margin: 0;">--</h4>
+                    <div class="status-badge" id="skyStatus">Checking Sky...</div>
+                    <h4 id="wName" style="margin: 0; letter-spacing: 2px;">--</h4>
                     <div class="temp-main" id="wTemp">--°C</div>
-                    <div id="wMoon" class="moon-icon">🌙 <span style="font-size: 0.7rem; color: #888;" id="moonPhase">Loading...</span></div>
                     
-                    <div style="display: flex; justify-content: space-around; margin-top: 15px; font-size: 0.7rem;">
-                        <div>Rain: <b id="wRain" style="color: #00ff00;">--%</b></div>
-                        <div>Wind: <b id="wWind" style="color: #00ff00;">-- km/h</b></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; font-size: 0.7rem; color: #888;">
+                        <div style="background:#111; padding:10px; border-radius:8px;">Rain: <b id="wRain" style="color: #00ffff;">--%</b></div>
+                        <div style="background:#111; padding:10px; border-radius:8px;">Clouds: <b id="wCloud" style="color: #fff;">--%</b></div>
                     </div>
 
-                    <table class="forecast-table">
-                        <thead><tr><th>DATE</th><th>MAX</th><th>RAIN</th></tr></thead>
-                        <tbody id="forecastBody"></tbody>
-                    </table>
+                    <div class="table-scroll">
+                        <table class="forecast-table">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>MORN</th>
+                                    <th>NOON</th>
+                                    <th>EVE</th>
+                                    <th>RAIN%</th>
+                                </tr>
+                            </thead>
+                            <tbody id="forecastBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -76,11 +88,12 @@
                 <h3 style="color: #ff0000; font-size: 0.9rem; margin-bottom: 15px;">PRAYER TIMES</h3>
                 <div style="display: flex; gap: 5px; justify-content: center;">
                     <input type="text" id="prayerCity" placeholder="City Name">
-                    <button onclick="getPrayers()">GO</button>
+                    <button onclick="getPrayers()">FETCH</button>
                 </div>
 
                 <div id="prayerResult" class="result-area">
-                    <h4 id="pName" style="margin: 0; color: #888;">--</h4>
+                    <h4 id="pName" style="margin: 0; color: #ff0000;">--</h4>
+                    <p id="pDate" style="font-size: 0.6rem; color: #666; margin-bottom: 15px;">--</p>
                     <ul class="prayer-list">
                         <li>Fajr <span id="fajr">--:--</span></li>
                         <li>Dhuhr <span id="dhuhr">--:--</span></li>
@@ -88,78 +101,79 @@
                         <li>Maghrib <span id="maghrib">--:--</span></li>
                         <li>Isha <span id="isha">--:--</span></li>
                     </ul>
-                    <p style="font-size: 0.6rem; color: #444; margin-top: 10px;">Method: University of Islamic Sciences, Karachi</p>
+                    <p style="font-size: 0.5rem; color: #444; margin-top: 10px;">Calculation: University of Islamic Sciences, Karachi</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="footer">© NAWAB ZADA HACKER | MULTI-API INTERFACE v3.0</div>
+    <div class="footer">© NAWAB ZADA | POWERED BY NAWAB ZADA HACKER</div>
 
     <script>
-        // --- WEATHER & MOON LOGIC ---
         async function getWeather() {
             const city = document.getElementById('weatherCity').value;
-            if(!city) return alert("Jani, city likho!");
+            if(!city) return alert("Apne city ka Name likho!");
 
             try {
-                // Geo-coding
                 const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&format=json`);
                 const geoData = await geoRes.json();
+                if(!geoData.results) throw new Error();
                 const { latitude, longitude, name } = geoData.results[0];
 
-                // Weather API
-                const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,precipitation_probability_max&timezone=auto&forecast_days=7`;
+                // Advanced Fetch (Hourly + 15 Day Daily)
+                const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,cloud_cover,precipitation&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=15`;
                 const res = await fetch(wUrl);
                 const data = await res.json();
 
-                document.getElementById('wName').innerText = name;
+                document.getElementById('wName').innerText = name.toUpperCase();
                 document.getElementById('wTemp').innerText = Math.round(data.current.temperature_2m) + "°C";
                 document.getElementById('wRain').innerText = data.daily.precipitation_probability_max[0] + "%";
-                document.getElementById('wWind').innerText = data.current.wind_speed_10m + " km/h";
-                
-                // Moon Phase Calculation (Simple Logic)
-                const phase = getMoonPhase();
-                document.getElementById('moonPhase').innerText = phase;
+                document.getElementById('wCloud').innerText = data.current.cloud_cover + "%";
+                document.getElementById('skyStatus').innerText = getWeatherDesc(data.current.weather_code, data.current.cloud_cover);
 
-                // Forecast
+                // Detailed 15-Day Forecast
                 const tbody = document.getElementById('forecastBody');
                 tbody.innerHTML = "";
-                for(let i=0; i<5; i++) {
-                    tbody.innerHTML += `<tr><td>${data.daily.time[i]}</td><td>${data.daily.temperature_2m_max[i]}°C</td><td>${data.daily.precipitation_probability_max[i]}%</td></tr>`;
+                
+                for(let i=0; i<15; i++) {
+                    // Extracting Morning (8AM), Noon (1PM), Evening (7PM) index for each day
+                    let morningTemp = data.hourly.temperature_2m[i * 24 + 8];
+                    let noonTemp = data.hourly.temperature_2m[i * 24 + 13];
+                    let eveningTemp = data.hourly.temperature_2m[i * 24 + 19];
+                    let rainChance = data.daily.precipitation_probability_max[i];
+
+                    tbody.innerHTML += `<tr>
+                        <td>${data.daily.time[i]}</td>
+                        <td>${Math.round(morningTemp)}°</td>
+                        <td style="color:#ff0000">${Math.round(noonTemp)}°</td>
+                        <td>${Math.round(eveningTemp)}°</td>
+                        <td class="${rainChance > 20 ? 'rain-high' : ''}">${rainChance}%</td>
+                    </tr>`;
                 }
 
                 document.getElementById('weatherResult').style.display = "block";
-            } catch(e) { alert("City not found!"); }
+            } catch(e) { alert("Nawab ZADA, city check karo!"); }
         }
 
-        function getMoonPhase() {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            // Basic lunar cycle calculation
-            const c = e = jd = b = 0;
-            const res = ["New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous", "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"];
-            const lp = 2551443; 
-            const now = new Date(year, month-1, day, 20, 35, 0);
-            const new_moon = new Date(1970, 0, 7, 20, 35, 0);
-            const phase = ((now.getTime() - new_moon.getTime())/1000) % lp;
-            const index = Math.floor((phase / lp) * 8);
-            return res[index];
+        function getWeatherDesc(code, cloud) {
+            if (code >= 61) return "RAIN DETECTED 🌧️";
+            if (cloud > 70) return "HEAVY CLOUDS ☁️";
+            if (cloud > 30) return "PARTLY CLOUDY ⛅";
+            return "CLEAR SKY ☀️";
         }
 
-        // --- PRAYER TIMES LOGIC ---
         async function getPrayers() {
             const city = document.getElementById('prayerCity').value;
             if(!city) return alert("Jani, city likho!");
 
             try {
+                // Method 1 is University of Islamic Sciences, Karachi (Best for Pakistan)
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${city}&method=1`);
                 const data = await res.json();
                 const times = data.data.timings;
 
                 document.getElementById('pName').innerText = city.toUpperCase();
+                document.getElementById('pDate').innerText = data.data.date.readable + " | " + data.data.date.hijri.day + " " + data.data.date.hijri.month.en;
                 document.getElementById('fajr').innerText = times.Fajr;
                 document.getElementById('dhuhr').innerText = times.Dhuhr;
                 document.getElementById('asr').innerText = times.Asr;
@@ -167,8 +181,9 @@
                 document.getElementById('isha').innerText = times.Isha;
 
                 document.getElementById('prayerResult').style.display = "block";
-            } catch(e) { alert("City not found for prayers!"); }
+            } catch(e) { alert("Prayer data not found!"); }
         }
     </script>
 </body>
-</html>
+    </html>
+    
