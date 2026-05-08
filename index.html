@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAWAB ZADA | Wather Check Tool</title>
+    <title>NAWAB ZADA | MASTER HUB PRO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Amiri&display=swap');
         
@@ -40,6 +40,10 @@
         .forecast-table td { padding: 10px; border-bottom: 1px solid #111; background: #080808; }
         .rain-high { color: #00ffff; font-weight: bold; }
 
+        /* SATELLITE MAP VIP */
+        #mapArea { margin-top: 20px; border: 2px solid #333; border-radius: 10px; overflow: hidden; height: 250px; display: none; box-shadow: 0 0 15px rgba(255,0,0,0.2); }
+        iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(90%) contrast(110%); }
+
         /* WhatsApp Button VIP */
         .wa-btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid #25d366; color: #25d366; text-decoration: none; border-radius: 50px; font-size: 0.7rem; font-weight: bold; letter-spacing: 1px; }
         .wa-btn:hover { background: #25d366; color: #000; box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
@@ -51,7 +55,7 @@
 
     <div class="container">
         <h1>NAWAB ZADA HACKER 🙌🦅</h1>
-        <p class="tagline">ELITE WEATHER & PRAYER HUB V2.0</p>
+        <p class="tagline">ELITE WEATHER & PRAYER HUB V3.0</p>
 
         <div class="hub-grid">
             <div class="hub-box">
@@ -85,6 +89,8 @@
                             <tbody id="forecastBody"></tbody>
                         </table>
                     </div>
+
+                    <div id="mapArea"></div>
                 </div>
             </div>
 
@@ -111,27 +117,33 @@
         </div>
 
         <a href="https://whatsapp.com/channel/0029VbB47ttDDmFNztpnZf2m" target="_blank" class="wa-btn">
-            JOIN WHATSAPP CHANNEL For More Updates
+            JOIN WHATSAPP CHANNEL
         </a>
 
-        <div class="footer">© No Copy | POWERED BY NAWAB ZADA HACKER</div>
+        <div class="footer">© NAWAB ZADA | POWERED BY NAWAB Zada HACKER 🦅🙌</div>
     </div>
 
     <script>
         async function getWeather() {
             const city = document.getElementById('weatherCity').value.trim();
-            if(!city) return alert("Write Your City Name!");
+            if(!city) return alert("Jani, city likho!");
 
             try {
                 const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&format=json`);
                 const geoData = await geoRes.json();
                 
                 if(!geoData.results || geoData.results.length === 0) {
-                    alert("Wrong your city name check spelling and try again!");
+                    alert("Jani, ye city nahi mil rahi. Sahi spelling likho!");
                     return;
                 }
 
                 const { latitude, longitude, name } = geoData.results[0];
+                
+                // MAP UPDATER
+                const mapArea = document.getElementById('mapArea');
+                mapArea.style.display = "block";
+                mapArea.innerHTML = `<iframe src="https://maps.google.com/maps?q=${latitude},${longitude}&z=12&t=k&output=embed"></iframe>`;
+
                 const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,cloud_cover,precipitation&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=15`;
                 
                 const res = await fetch(wUrl);
@@ -161,7 +173,7 @@
                 }
                 document.getElementById('weatherResult').style.display = "block";
             } catch(e) { 
-                alert("API Connection Issues!"); 
+                alert("Nawab ZADA, API Connection ka masla hai!"); 
             }
         }
 
@@ -174,13 +186,13 @@
 
         async function getPrayers() {
             const city = document.getElementById('prayerCity').value.trim();
-            if(!city) return alert("Write Your City Name!");
+            if(!city) return alert("Jani, city likho!");
             try {
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${encodeURIComponent(city)}&method=1`);
                 const data = await res.json();
                 
                 if(!data || data.code !== 200) {
-                    alert("Dear User, prayer times nahi mil sakay. City Name search karo.");
+                    alert("Jani, prayer times nahi mil sakay. City check karo.");
                     return;
                 }
 
@@ -194,10 +206,10 @@
                 document.getElementById('isha').innerText = times.Isha;
                 document.getElementById('prayerResult').style.display = "block";
             } catch(e) { 
-                alert("DEAR USER CHEACK YOUR INTERNET CONNECTION!"); 
+                alert("wrong Check your internet connection!"); 
             }
         }
     </script>
 </body>
     </html>
-                                
+    
