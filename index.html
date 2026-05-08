@@ -111,7 +111,7 @@
         </div>
 
         <a href="https://whatsapp.com/channel/0029VbB47ttDDmFNztpnZf2m" target="_blank" class="wa-btn">
-            JOIN WHATSAPP CHANNEL
+            JOIN WHATSAPP CHANNEL For More Updates
         </a>
 
         <div class="footer">© No Copy | POWERED BY NAWAB ZADA HACKER</div>
@@ -120,14 +120,14 @@
     <script>
         async function getWeather() {
             const city = document.getElementById('weatherCity').value.trim();
-            if(!city) return alert("Jani, city likho!");
+            if(!city) return alert("Write Your City Name!");
 
             try {
                 const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&format=json`);
                 const geoData = await geoRes.json();
                 
                 if(!geoData.results || geoData.results.length === 0) {
-                    alert("Jani, ye city nahi mil rahi. Sahi spelling likho!");
+                    alert("Wrong your city name check spelling and try again!");
                     return;
                 }
 
@@ -174,7 +174,7 @@
 
         async function getPrayers() {
             const city = document.getElementById('prayerCity').value.trim();
-            if(!city) return alert("Jani, city likho!");
+            if(!city) return alert("Write Your City Name!");
             try {
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${encodeURIComponent(city)}&method=1`);
                 const data = await res.json();
