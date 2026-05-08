@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAWAB ZADA | weather Check tool</title>
+    <title>NAWAB ZADA | Wather Check Tool</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Amiri&display=swap');
         
@@ -50,8 +50,8 @@
 <body>
 
     <div class="container">
-        <h1>NAWAB ZADA Hacker</h1>
-        <p class="tagline">ELITE WEATHER & PRAYER HUB V1.0</p>
+        <h1>NAWAB ZADA HACKER 🙌🦅</h1>
+        <p class="tagline">ELITE WEATHER & PRAYER HUB V2.0</p>
 
         <div class="hub-grid">
             <div class="hub-box">
@@ -114,21 +114,26 @@
             JOIN WHATSAPP CHANNEL
         </a>
 
-        <div class="footer">© No Copy | POWERED BY NAWAB Zada HACKER🙌🦅</div>
+        <div class="footer">© No Copy | POWERED BY NAWAB ZADA HACKER</div>
     </div>
 
     <script>
         async function getWeather() {
-            const city = document.getElementById('weatherCity').value;
-            if(!city) return alert("Apne city likho!");
+            const city = document.getElementById('weatherCity').value.trim();
+            if(!city) return alert("Jani, city likho!");
 
             try {
-                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&format=json`);
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&format=json`);
                 const geoData = await geoRes.json();
-                if(!geoData.results) throw new Error();
-                const { latitude, longitude, name } = geoData.results[0];
+                
+                if(!geoData.results || geoData.results.length === 0) {
+                    alert("Jani, ye city nahi mil rahi. Sahi spelling likho!");
+                    return;
+                }
 
+                const { latitude, longitude, name } = geoData.results[0];
                 const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,cloud_cover,precipitation&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=15`;
+                
                 const res = await fetch(wUrl);
                 const data = await res.json();
 
@@ -141,14 +146,23 @@
                 const tbody = document.getElementById('forecastBody');
                 tbody.innerHTML = "";
                 for(let i=0; i<15; i++) {
-                    let morningTemp = data.hourly.temperature_2m[i * 24 + 8];
-                    let noonTemp = data.hourly.temperature_2m[i * 24 + 13];
-                    let eveningTemp = data.hourly.temperature_2m[i * 24 + 19];
+                    let morningTemp = data.hourly.temperature_2m[i * 24 + 8] || "--";
+                    let noonTemp = data.hourly.temperature_2m[i * 24 + 13] || "--";
+                    let eveningTemp = data.hourly.temperature_2m[i * 24 + 19] || "--";
                     let rainChance = data.daily.precipitation_probability_max[i];
-                    tbody.innerHTML += `<tr><td>${data.daily.time[i]}</td><td>${Math.round(morningTemp)}°</td><td style="color:#ff0000">${Math.round(noonTemp)}°</td><td>${Math.round(eveningTemp)}°</td><td class="${rainChance > 20 ? 'rain-high' : ''}">${rainChance}%</td></tr>`;
+                    
+                    tbody.innerHTML += `<tr>
+                        <td>${data.daily.time[i]}</td>
+                        <td>${Math.round(morningTemp)}°</td>
+                        <td style="color:#ff0000">${Math.round(noonTemp)}°</td>
+                        <td>${Math.round(eveningTemp)}°</td>
+                        <td class="${rainChance > 20 ? 'rain-high' : ''}">${rainChance}%</td>
+                    </tr>`;
                 }
                 document.getElementById('weatherResult').style.display = "block";
-            } catch(e) { alert("Dear user, city name check karo!"); }
+            } catch(e) { 
+                alert("API Connection Issues!"); 
+            }
         }
 
         function getWeatherDesc(code, cloud) {
@@ -159,11 +173,17 @@
         }
 
         async function getPrayers() {
-            const city = document.getElementById('prayerCity').value;
-            if(!city) return alert("Dear, city name likho!");
+            const city = document.getElementById('prayerCity').value.trim();
+            if(!city) return alert("Jani, city likho!");
             try {
-                const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${city}&method=1`);
+                const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=${encodeURIComponent(city)}&method=1`);
                 const data = await res.json();
+                
+                if(!data || data.code !== 200) {
+                    alert("Dear User, prayer times nahi mil sakay. City Name search karo.");
+                    return;
+                }
+
                 const times = data.data.timings;
                 document.getElementById('pName').innerText = city.toUpperCase();
                 document.getElementById('pDate').innerText = data.data.date.readable + " | " + data.data.date.hijri.day + " " + data.data.date.hijri.month.en;
@@ -173,9 +193,11 @@
                 document.getElementById('maghrib').innerText = times.Maghrib;
                 document.getElementById('isha').innerText = times.Isha;
                 document.getElementById('prayerResult').style.display = "block";
-            } catch(e) { alert("Prayer data not found!"); }
+            } catch(e) { 
+                alert("DEAR USER CHEACK YOUR INTERNET CONNECTION!"); 
+            }
         }
     </script>
 </body>
-                        </html>
-                            
+    </html>
+                                
